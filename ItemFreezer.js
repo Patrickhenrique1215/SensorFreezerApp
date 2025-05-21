@@ -1,37 +1,48 @@
-// Importa dependências do React e React Native
-import React from 'react'; 
-import { View, Text, StyleSheet } from 'react-native'; // Importa componentes para a interface do usuário (View, Text) e a ferramenta de estilo (StyleSheet)
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-// Componente visual de cada freezer
-export default function ItemFreezer({ id, temp, isAlert }) {
+export default function ItemFreezer({ id, temp, isAlert, onOk }) {
+  if (!isAlert) return null;
+
   return (
-    // View principal do item, estilizada com base no estado de alerta
-    <View style={[styles.container, isAlert && styles.alert]}> 
-     
-      <Text style={styles.id}>{id}</Text> 
-
-     
-      <Text style={styles.temp}>{temp}ºC</Text> 
+    <View style={[styles.container, styles.alert]}>
+      <Text style={styles.id}>{id}</Text>
+      <Text style={styles.temp}>{temp}ºC</Text>
+      <TouchableOpacity style={styles.button} onPress={() => onOk(id)}>
+        <Text style={styles.buttonText}>OK</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
-// Estilos do componente
 const styles = StyleSheet.create({
   container: {
-    padding: 12, // Adiciona espaçamento interno ao redor do conteúdo do container
-    marginVertical: 6, // Espaçamento vertical entre os itens
-    borderRadius: 8, // Arredonda os cantos do container
-    backgroundColor: '#e0f7fa', // Define a cor de fundo como azul claro (sem alerta)
+    padding: 12,
+    marginVertical: 6,
+    borderRadius: 8,
+    alignItems: 'center',
   },
   alert: {
-    backgroundColor: '#ff5252', // Se em alerta, altera a cor de fundo para vermelho
+    backgroundColor: '#ff5252',
   },
   id: {
-    fontWeight: 'bold', // Deixa o texto do ID em negrito
-    fontSize: 16, // Define o tamanho da fonte do ID
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   temp: {
-    fontSize: 14, // Define o tamanho da fonte da temperatura
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  button: {
+    marginTop: 8,
+    backgroundColor: '#fff',
+    paddingVertical: 6,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+  },
+  buttonText: {
+    color: '#ff5252',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
